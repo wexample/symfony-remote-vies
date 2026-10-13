@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Wexample\SymfonyRemoteVies\Service\ViesClient:
+        arguments:
+            $httpClient: '@?http_client'
+            $url: '%wexample_symfony_remote_vies.url%'
+            $requester: '%wexample_symfony_remote_vies.requester%'
+            $cache: '@?cache.app'
