@@ -1,7 +1,7 @@
 {
   "name": "wexample/symfony-remote-vies",
   "description": "EU VAT numbers checked against VIES, the European Commission's register, declared as a symfony-remote",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "type": "library",
   "license": "MIT",
   "autoload": {
@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=8.5",
-    "wexample/symfony-helpers": ">=19.0.0",
+    "wexample/symfony-helpers": ">=19.1.0",
     "wexample/symfony-remote": ">=2.0.10",
     "symfony/http-client": ">=7.0",
     "symfony/cache-contracts": "^3.0"
