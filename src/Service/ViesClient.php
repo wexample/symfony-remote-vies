@@ -79,8 +79,12 @@ class ViesClient implements RemoteInterface
             return $this->request($countryCode, $number);
         }
 
+        // Hashed, not concatenated: the number is what the visitor typed, and a
+        // PSR-6 key refuses `{}()/\@:`, which would turn a typo into a crash.
+        // Stripping those characters instead would let two different questions
+        // share one verdict.
         return $this->cache->get(
-            'wexample_remote_vies_'.$countryCode.$number,
+            'wexample_remote_vies_'.hash('xxh128', $countryCode.$number),
             function (ItemInterface $item) use ($countryCode, $number): ViesCheck {
                 $item->expiresAfter(self::CACHE_TTL);
 

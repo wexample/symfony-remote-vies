@@ -126,6 +126,23 @@ class ViesClientTest extends TestCase
         $this->assertCount(1, $requests);
     }
 
+    public function testSplitKeepsWhatItDoesNotKnowToDrop(): void
+    {
+        $this->assertSame(['IE', '1+23456A'], ViesClient::split('ie 1+23456a'));
+        $this->assertSame(['FR', '12/34{5}@6:7'], ViesClient::split('FR 12/34{5}@6:7'));
+        $this->assertSame(['X', ''], ViesClient::split('x'));
+    }
+
+    public function testCharactersACacheKeyRefusesStillGetAVerdict(): void
+    {
+        $client = $this->client([$this->answer(false, 'FR', '12/34{5}@6:7'), $this->answer(true)], $requests, cached: true);
+
+        $this->assertFalse($client->check('FR 12/34{5}@6:7')->valid);
+        $this->assertFalse($client->check('FR12/34{5}@6:7')->valid);
+        $this->assertCount(1, $requests);
+        $this->assertSame('12/34{5}@6:7', $requests[0]['body']['vatNumber']);
+    }
+
     public function testStatus(): void
     {
         $this->assertSame(RemoteState::Up, $this->client('{"vow": {"available": true}, "countries": []}')->checkStatus()->state);
