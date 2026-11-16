@@ -1,6 +1,6 @@
 # symfony-remote-vies
 
-Version: 2.0.7
+Version: 3.0.0
 
 EU VAT numbers checked against VIES, the European Commission's register, declared as a symfony-remote
 
